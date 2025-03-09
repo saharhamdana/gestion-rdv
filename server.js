@@ -5,6 +5,11 @@ const userRoutes = require('./routes/user.route')
 const AuthRoutes = require('./routes/auth.route')
 const rdvRoute = require('./routes/rdv.route');
 const app = express();
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const cors = require('cors');
+app.use(cors());
+
 
 
 app.use(express.json())
@@ -18,6 +23,29 @@ mongoose.connect(process.env.MONGO_URI)
     console.log('Connect to server database')
 }).catch(err=>{console.log('Error connecting to server database')
 })
+
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "API Gestion des Rendez-vous",
+            version: "1.0.0",
+            description: "Documentation de l'API pour la gestion des rendez-vous",
+        },
+        servers: [
+            {
+                url: "http://localhost:5000", // Change cette URL si nécessaire
+            },
+        ],
+    },
+    apis: ["./routes/*.js"], // Spécifie où sont définies tes routes
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+// Route Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 const PORT =process.env.PORT || 3000
 app.listen(PORT,()=>{
