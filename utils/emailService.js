@@ -4,8 +4,8 @@ require("dotenv").config(); // Charger les variables d'environnement
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: process.env.EMAIL, // Ton adresse e-mail
-        pass: process.env.EMAIL_PASSWORD, // Ton mot de passe ou mot de passe d’application
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
     },
 });
 

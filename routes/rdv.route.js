@@ -37,6 +37,7 @@ const { sendReminderEmail } = require("../utils/emailService"); // Assure-toi du
 router.post("/create", async (req, res) => {
     try {
         const { client, professionnel, date, emailClient } = req.body;
+
         const rendezVous = new RendezVous({ client, professionnel, date });
         await rendezVous.save();
 
@@ -48,7 +49,7 @@ router.post("/create", async (req, res) => {
 
         res.status(201).json({ message: "Rendez-vous créé et e-mail envoyé !" });
     } catch (error) {
-        console.error("Erreur serveur :", error); // Affiche l'erreur dans la console
+        console.error("Erreur serveur :", error); 
         res.status(500).json({ error: "Erreur serveur", details: error.message });
     }
 });
